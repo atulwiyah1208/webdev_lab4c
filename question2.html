@@ -1,0 +1,56 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Question 2 - JSON Data</title>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+</head>
+<body>
+
+    <h2>Book Information</h2>
+
+    <p id="bookTitle"></p>
+    <p id="bookAuthor"></p>
+
+    <h3>Genres of All Books</h3>
+    <ul id="bookGenres"></ul>
+
+    <script>
+
+        // retrieve data from books.json
+        $.getJSON("books.json", function(data) {
+
+            const bookData = data;
+
+            const firstTitle = bookData.Books[0].title;
+
+            $("#bookTitle").text("First Book Title: " + firstTitle);
+            console.log(firstTitle);
+
+            const secondAuthor = bookData.Books[1].author;
+
+            $("#bookAuthor").text("Second Book Author: " + secondAuthor);
+            console.log(secondAuthor);
+
+            bookData.Books.forEach(book => {
+
+                book.genres.forEach(genre => {
+                    $("#bookGenres").append("<li>" + genre + "</li>");
+                });
+
+                console.log(book.genres);
+
+            });
+
+        }).fail(function() {
+            console.log("Error loading JSON file.");
+            $("#bookTitle").text("Unable to load book data.");
+        });
+
+    </script>
+
+</body>
+</html>
